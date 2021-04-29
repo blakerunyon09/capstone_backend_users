@@ -1,4 +1,5 @@
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const PORT = 8080
 
@@ -8,6 +9,9 @@ const database = require('knex')(databaseConfig)
 
 // JSON MIDDLEWARE
 app.use(express.json())
+
+// CORS MIDDLEWARE
+app.use(cors())
 
 // IMPORT ROUTES
 const authRoute = require('./routes/auth')

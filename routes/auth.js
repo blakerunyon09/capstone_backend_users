@@ -31,7 +31,10 @@ router.post('/register', (req, res) => {
       "password": hashedPassword,
       "organization": newUser.organization
     })
-    .then(message => res.status(201).send("New User Created"))
+    .then(message => {
+      const token = jwt.sign({id: newUser.email}, process.env.TOKEN_SECRET)
+      res.header('auth-token', token).send({msg: 'New User Created', token})
+    })
     .catch(err => {
       if(err.constraint === "users_email_unique") return res.send("Email Already Exists")
       else return res.send(err)
@@ -49,19 +52,19 @@ router.post('/login', (req, res) => {
   database('users')
   .where({"email": user.email})
   .then(foundUser => {
-    if(foundUser.length === 0) return res.send("Email or Password Incorrect")
+    if(foundUser.length === 0) return res.status(403).send({msg: "Email or Password Incorrect"})
     return bcrypt
       .compare(user.password, foundUser[0].password)
       .then(passwordMatched => {
-        if (!passwordMatched) return res.status(403).send({error: 'Invalid Password'})
+        if (!passwordMatched) return res.status(403).send({msg: "Email or Password Incorrect"})
 
         // CREATE TOKEN
         const token = jwt.sign({id: foundUser[0].email}, process.env.TOKEN_SECRET)
-        res.header('auth-token', token).send('Logged In')
+        res.header('auth-token', token).send({msg: 'Logged In', token})
       })
-      .catch(err => res.send("error"))
+      .catch(err => res.send({msg: "error"}))
   })
-  .catch(err => res.send(err))
+  .catch(err => res.send({msg: "Please Provide an Email & Password"}))
 })
 
 
