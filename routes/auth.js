@@ -26,8 +26,8 @@ router.post('/register', (req, res) => {
   .then(hashedPassword => {
     database('users')
     .insert({
-      "username": newUser.username,
-      "email": newUser.email,
+      "username": newUser.username.toLowerCase(),
+      "email": newUser.email.toLowerCase(),
       "password": hashedPassword,
       "organization": newUser.organization
     })
@@ -46,11 +46,13 @@ router.post('/login', (req, res) => {
   const user = req.body
 
   // VALIDATE USER REQUIREMENTS
-  const { error } = loginValidation(user)
-  if(error) return res.status(400).send(error.details[0].message)
+  // const { error } = loginValidation(user)
+  // if(error) return res.status(400).send(error.details[0].message)
 
   database('users')
-  .where({"email": user.email})
+  .where(function() {
+    this.where({"email": user.email.toLowerCase()}).orWhere({"username": user.email.toLowerCase()})
+  })
   .then(foundUser => {
     if(foundUser.length === 0) return res.status(403).send({msg: "Email or Password Incorrect"})
     return bcrypt

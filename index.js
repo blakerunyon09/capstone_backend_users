@@ -15,8 +15,10 @@ app.use(cors())
 
 // IMPORT ROUTES
 const authRoute = require('./routes/auth')
+const intRoute = require('./routes/integration')
 
 // MIDDLEWARE
 app.use('/api', authRoute)
+app.use('/api', intRoute)
 
 app.listen(PORT, ()=> {console.log(`Serving on PORT ${PORT}`)})
