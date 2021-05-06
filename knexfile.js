@@ -1,3 +1,5 @@
+const { knexSnakeCaseMappers } = require('objection')
+
 module.exports = {
 
   development: {
@@ -10,7 +12,10 @@ module.exports = {
   migrations: {
      directory: './migrations',
   },
-     seeds: { directory: './seeds' },
+  ...knexSnakeCaseMappers,
+  seeds: { 
+     directory: './seeds' 
+   },
   }
   
 }
