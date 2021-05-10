@@ -46,4 +46,12 @@ router.get('/show-integrations', auth, async (req, res) => {
   res.send(user[0])
 })
 
+router.get('/integration/:id', auth, async (req, res) => {
+  // FIND USER
+  const user = await User.query().where('email', req.user).withGraphFetched('integrations')
+  const int = await user[0].integrations.find(int => int.id === +req.params.id)
+
+  res.send(int)
+})
+
 module.exports = router 

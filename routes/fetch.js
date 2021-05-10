@@ -2,9 +2,14 @@ const router = require('express').Router()
 const axios = require('axios').default;
 
 router.get('/', (req, res) => {
-  console.log("Cha.")
-  
-  axios.post('https://awapi.active.com/rest/camps-season-info/', {
+
+  // res.send({
+  //   headers: req.headers.headers, 
+  //   body: req.headers.body,
+  //   endpoint: req.headers.endpoint
+  // })
+
+  axios.post(req.headers.endpoint, {
     appToken:"Px7U0We8xt9MKovt8kzYioy2KyfGvbv9Expp4GMagwUBcPVpvoI04nKxTSnC+A8j",
     request:{
       applicationName:"Avid4AdventureNew",
@@ -14,8 +19,7 @@ router.get('/', (req, res) => {
     }
   },{
     headers: {
-      "Content-Type":"application/json",
-      "Accept":"application/json"
+      ...req.headers.headers
     }
   })
   .then(function (response) {
@@ -24,6 +28,7 @@ router.get('/', (req, res) => {
   .catch(function (error) {
     res.send({error: error.data});
   }); 
+
 })
 
 module.exports = router

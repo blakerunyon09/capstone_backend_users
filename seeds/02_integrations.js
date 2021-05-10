@@ -8,12 +8,12 @@ exports.seed = async function(knex) {
     {
       provider: "Active",
       type: "Seasons",
-      endpoint: "https://awapi.active.com/rest/camps-season-info",
+      endpoint: "https://awapi.active.com/rest/camps-season-info/",
       method: "POST"
     },{
       provider: "Active",
       type: "Registrations",
-      endpoint: "https://awapi.active.com/rest/camps-registration-info",
+      endpoint: "https://awapi.active.com/rest/camps-registration-info/",
       method: "POST"
     }
   ])
