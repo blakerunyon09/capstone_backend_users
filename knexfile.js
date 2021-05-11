@@ -1,4 +1,4 @@
-const { knexSnakeCaseMappers } = require('objection')
+require('dotenv').config();
 
 module.exports = {
 
@@ -12,21 +12,9 @@ module.exports = {
   migrations: {
      directory: './migrations',
   },
-  ...knexSnakeCaseMappers,
   seeds: { 
      directory: './seeds' 
    },
   }
   
 }
-
-const prodConfig = Object.assign(
-   {},
-   devConfig,
-   { client: 'pg', connection: process.env.DATABASE_URL}
- )
- 
- module.exports = {
-   development: devConfig,
-   production: prodConfig
- }
