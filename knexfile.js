@@ -15,12 +15,8 @@ module.exports = {
    seeds: { 
       directory: './seeds' 
    },
-   dialectOptions: {
-      ssl: {
-         require: true,
-         rejectUnauthorized: false
-      }
+   ssl: {
+      rejectUnauthorized: false
    }
   }
-  
 }
