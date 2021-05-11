@@ -7,14 +7,17 @@ module.exports = {
      connection: 'postgres:///users'
   },
   production: {
-     client: 'pg',
-     connection: process.env.DATABASE_URL,
-  migrations: {
-     directory: './migrations',
-  },
-  seeds: { 
-     directory: './seeds' 
+   client: 'pg',
+   connection: process.env.DATABASE_URL,
+   ssl: {
+   rejectUnauthorized: false
    },
+   migrations: {
+      directory: './migrations',
+   },
+   seeds: { 
+      directory: './seeds' 
+   }
   }
   
 }
