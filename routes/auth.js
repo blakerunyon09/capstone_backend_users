@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 // KNEX IMPORT
-const databaseConfig = require('../knexfile')[process.env.DB_ENV || 'development']
+const databaseConfig = require('../knexfile')[process.env.NODE_ENV || 'development']
 const database = require('knex')(databaseConfig)
 
 router.get('/users', (_, res) => {
