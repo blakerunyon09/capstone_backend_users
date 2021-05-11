@@ -1,6 +1,9 @@
 require('dotenv').config();
 const pg = require('pg')
-pg.defaults.ssl = true
+pg.defaults.ssl = {
+   require:true,
+   rejectUnauthorized:false
+}
 
 module.exports = {
 
@@ -18,4 +21,5 @@ module.exports = {
       directory: './seeds' 
    }
   }
+
 }
