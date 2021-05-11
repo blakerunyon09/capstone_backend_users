@@ -8,15 +8,18 @@ module.exports = {
   },
   production: {
    client: 'pg',
-   connection: {
-      database: process.env.DATABASE_URL,
-      ssl: {rejectUnauthorized: false}
-   },
+   connection: process.env.DATABASE_URL,
    migrations: {
       directory: './migrations',
    },
    seeds: { 
       directory: './seeds' 
+   },
+   dialectOptions: {
+      ssl: {
+         require: true,
+         rejectUnauthorized: false
+      }
    }
   }
   
