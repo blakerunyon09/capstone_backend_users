@@ -1,3 +1,4 @@
+const dbConfigObj = require('./knexfile')
 const express = require('express')
 var cors = require('cors')
 const app = express()
@@ -22,3 +23,16 @@ app.use('/fetch', fetch)
 app.use('/frontend', frontend)
 
 app.listen(PORT, ()=> {console.log(`Serving on PORT ${PORT}`)})
+
+let dbConnectionConfig
+
+switch (process.env.NODE_ENV){
+  case 'production':
+    dbConnectionConfig = dbConfigObj.production
+    break;
+  default:
+    dbConnectionConfig = dbConfigObj.development
+}
+
+const appDb = connectToDb(dbConnectionConfig)
+Model.knex(appDb)
